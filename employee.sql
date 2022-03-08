@@ -85,3 +85,60 @@ select emp_name from employeeagi where salary=(select max(salary) as sal_max fro
 select emp_name from employeeagi where extract(month from doj)=(select month_no from (select count(extract(month from doj)) as kids,extract(month from doj) as month_no from employeeagi where designation='Programmer' group by extract(month from doj) order by kids desc) where rownum<2);
 
 --11
+select emp_name,designation,project_domain from employeeagi order by emp_name,designation,project_domain;
+--12
+select project_domain,sum(salary) as sum,avg(salary) as average from employeeagi group by project_domain;
+--13
+select dept_name from employeeagi e inner join departmentagi d on d.dept_id=e.dept where e.designation='Project Leader';
+--14
+select emp_name,dob from employeeagi where extract(month from dob)=4;
+--15
+select * from employeeagi where dob=(select min(dob) from employeeagi);
+--17
+select emp_name from employeeagi e inner join departmentagi d on d.dept_id=e.dept where (e.salary between 2500 and 18000 and d.dept_name='IT');
+--18
+select extract(year from current_date)-extract(year from min(dob))-1900 as oldest_age from employeeagi;
+--19
+select empid,emp_name from employeeagi where mobile_no is null;
+--20
+select gender,avg(extract(year from current_date)-extract(year from dob)-1900) as average from employeeagi group by gender;
+--21
+select emp_name from employeeagi where extract(month from dob)=extract(month from current_date);
+--22
+select emp_name from employeeagi where (designation='System Analyst' or designation='Project Leader') and extract(year from doj)<91;
+--23
+select count(*) as female_count from employeeagi where (gender='F' and extract(year from current_date)-extract(year from dob)-1900>10);
+--24
+select * from employeeagi where extract(month from dob) not in (3,10);
+-25
+select emp_name,dept_loc,mobile_no from employeeagi e inner join departmentagi d on d.dept_id=e.dept order by  dob; 
+--26
+select round(avg(salary),2) as avg_sal,max(salary) as max_sal,min(salary) as min_sal from employeeagi where salary>1000;
+--27
+select max(salary)-min(salary) as diff from employeeagi;
+--28
+select emp_name from employeeagi where length(emp_name)>=5;
+--29
+select unique(project_domain) from employeeagi;
+--30
+select * from (select count(*) as kids,project_domain from employeeagi group by project_domain order by kids ) where rownum<2;
+--31
+select emp_name from employeeagi where dob=(select min(dob) from employeeagi where extract(year from dob)=70 and gender='F');
+--32
+select * from (select count(extract(year from dob)) as kids,extract(year from dob) as year_no from employeeagi group by extract(year from dob) order by kids desc) where rownum<2;
+--33
+select * from (select count(extract(month from dob)) as kids,extract(month from dob) as month_no from employeeagi group by extract(month from dob) order by kids desc) where rownum<2;
+--34
+select emp_name from employeeagi where salary<(select avg(salary) from employeeagi where gender='F') and gender='M';
+--35
+select emp_name from employeeagi where salary>(select avg(salary) from employeeagi where gender='M') and gender='F';
+--36
+select unique(e1.emp_name),e1.salary from employeeagi e1 inner join employeeagi e2 on e1.salary=e2.salary where e1.empid!=e2.empid order by salary ;
+--37
+select min(salary) from (select emp_name,salary from employeeagi order by salary desc) where rownum<3;
+--38
+select emp_name from employeeagi where salary>any(select avg(salary) from employeeagi group by dept);
+--39
+select count(*) from employeeagi e inner join departmentagi d on d.dept_id=e.dept where 
+
+
