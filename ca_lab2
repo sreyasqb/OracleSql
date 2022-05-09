@@ -1,0 +1,128 @@
+set serveroutput on;
+
+--FIRST ONE
+--create or REPLACE procedure getJapanese is
+  --cursor c is select a.*,nt.mov_lang from actor a inner join (select * from movie m inner join movie_cast mc on m.mov_id=mc.mov_id) nt on a.act_id=nt.act_id where nt.mov_lang='Japanese';
+  --  
+--begin
+--  for n in c loop
+--    dbms_output.put_line(n.act_id  || ' ' || n.act_fname || ' ' ||  n.act_lname || ' ' || n.act_gender || ' ' || n.mov_lang);
+--  end loop;
+--end;
+
+--
+--execute getJapanese;
+
+--select a.*,nt.mov_lang from actor a inner join (select * from movie m inner join movie_cast mc on m.mov_id=mc.mov_id) nt on a.act_id=nt.act_id where nt.mov_lang='Japanese';
+
+--SECOND QUESTION
+
+--create or replace procedure q2 is
+  --cursor c is select nt.mov_title,nt.mov_lang, a.act_fname, a.act_lname,a.act_gender,nt.role,nt.mov_year from actor a inner join (select * from movie m inner join movie_cast mc on m.mov_id=mc.mov_id) nt on a.act_id=nt.act_id ;
+  --ceng int:=0;
+  --cjap int:=0;
+--begin
+--  for n in c loop
+--    dbms_output.put_line(n.mov_title  || ' ' || n.mov_lang || ' ' ||  n.act_fname || ' ' ||  n.act_lname || ' ' || n.act_gender || ' ' || n.role);
+--    if n.mov_lang='English' and n.mov_year between 1960 and 2000 then
+--      ceng:=ceng+1;
+--    end if;
+--    if n.mov_lang='Japanese' and n.mov_year between 1960 and 2000 then
+--      cjap:=cjap+1;
+--    end if;
+--  end loop;
+--  dbms_output.put_line('English movie count : ' || ceng);
+--  dbms_output.put_line('Japanese movie count : ' || cjap);
+--  
+--end;
+--
+--execute q2;
+--    
+---- sql query
+--select nt.mov_title,nt.mov_lang, a.act_fname, a.act_lname,a.act_gender,nt.role,nt.mov_year from actor a inner join (select * from movie m inner join movie_cast mc on m.mov_id=mc.mov_id) nt on a.act_id=nt.act_id ;
+
+--THIRD QUESTION
+
+--create or replace procedure q3 is
+--  cursor c is select a.*,nt.times_acted from actor a inner join (select a.act_id,count(*) as times_acted from actor a inner join movie_cast mc on a.act_id= mc.act_id group by a.act_id order by times_acted desc) nt on a.act_id=nt.act_id;
+--  max_count int;
+--  i int:=0;
+--begin
+--  for n in c loop
+--    if i=0 then
+--      max_count:=n.times_acted;
+--    end if;
+--    if n.times_acted=max_count then
+--      dbms_output.put_line(n.act_id  || ' ' || n.act_fname || ' ' ||  n.act_lname || ' ' || n.act_gender || ' ' || n.times_acted);
+--    end if;
+--    i:=i+1;
+--  end loop;
+--end;
+--    
+--      
+--execute q3;
+
+--sql QUERY
+--select a.*,nt.times_acted from actor a inner join (select a.act_id,count(*) as times_acted from actor a inner join movie_cast mc on a.act_id= mc.act_id group by a.act_id order by times_acted desc) nt on a.act_id=nt.act_id;
+
+--QUESTION 4
+
+
+--
+--create or replace procedure q4 is
+--  cursor c is select a.* from actor a inner join (select DISTINCT act_id from movie m inner join movie_cast mc on m.mov_id= mc.mov_id where m.mov_title='Annie Hall') nt on a.act_id=nt.act_id;
+--  i int:=0;
+--begin
+--  for n in c loop
+--    i:=i+1;
+--    dbms_output.put_line(n.act_id  || ' ' || n.act_fname || ' ' ||  n.act_lname || ' ' || n.act_gender);
+--  end loop;
+--  dbms_output.put_line('total actors are : ' || i);
+--end;
+--
+--execute q4;
+
+--sql query
+--select a.* from actor a inner join (select DISTINCT act_id from movie m inner join movie_cast mc on m.mov_id= mc.mov_id where m.mov_title='Annie Hall') nt on a.act_id=nt.act_id;
+
+--5th QUESTIOn
+
+--drop procedure getmovies;
+--
+--create or replace function getMovies(year1 int) return int
+--  is
+----  x int:=0;
+--  count int;
+--  cursor c is select count(mov_year) as movies from movie where mov_year=year1;
+--begin
+--  for n in c loop
+--    return n.movies;
+--  end loop;
+--end;
+--
+--begin
+--  dbms_output.put_line(getMovies(2000));
+--end;
+
+--6TH QUESTION
+
+--
+--create or replace procedure movieDelete(title varchar) is
+--begin
+--  delete from movie where mov_title=title;
+--  dbms_output.put_line('MOVIE : ' || title || ' Has been deleted' );
+--end;
+
+--
+--accept x char prompt 'Please enter movie title: '
+--
+--declare 
+--  a varchar2(10);
+--begin
+--  a := '&x';  
+--  movieDelete(a);
+--end;    
+
+
+
+
