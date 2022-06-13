@@ -1,14 +1,19 @@
 set serveroutput on;
 
-q1 
-create or replace trigger q1 before delete on actor for each row
-declare
-    c integer:=0;
-begin
-    
-end;
-
-delete from actor where act_id=117;
+--q1 
+--create or replace trigger q1 before delete on actor for each row
+--declare
+--    c integer:=0;
+--begin
+--    select count(*) into c from movie_cast where act_id= :old.act_id;
+--    if (c=0) then
+--        dbms_output.put_line('DELETE SUCCESFULL');
+--    else
+--        raise_application_error(-20111,'ACTOR DELETION NOT ALL NULL');
+--    end if;
+--end;
+--
+--delete from actor where act_id=117;
 
 
 
